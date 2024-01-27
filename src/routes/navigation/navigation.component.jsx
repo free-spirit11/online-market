@@ -11,6 +11,7 @@ import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component
 const Navigation = () => {
     const { currentUser } = useContext(UserContext);
     const { isCartOpen } = useContext(CartContext);
+    //temporary comment
 
     return (
         <Fragment>
