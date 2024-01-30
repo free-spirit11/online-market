@@ -18,7 +18,6 @@ export const UserProvider = ({ children }) => {
             //     createUserDocumentFromAuthIfDoesNotExist(user);
             // }
             setCurrentUser(user); //we are setting the user context depending on auth change from this class and will use the currentUser info anywhere it is needed
-            console.log(user);
         });
 
         //in useEffect, whatever is returned is being ran when the component unMounts

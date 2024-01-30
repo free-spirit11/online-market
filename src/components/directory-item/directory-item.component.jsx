@@ -16,7 +16,6 @@ const DirectoryItem = ({ category }) => {
                 <p>Shop Now</p>
             </div>
         </Link>
-
     );
 };
 
