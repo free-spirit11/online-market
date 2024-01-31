@@ -22,7 +22,8 @@ export const UserProvider = ({ children }) => {
 
         //in useEffect, whatever is returned is being ran when the component unMounts
         return unsubscribe;
-    })
+    }, [])
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 };
+
