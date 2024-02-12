@@ -1,10 +1,9 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { signInWithGooglePopup, createUserDocumentFromAuthIfDoesNotExist, signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss';
 import Button from "../button/button.component";
 import { BUTTON_TYPE_CLASSES } from "../button/button.component";
-// import { UserContext } from "../../contexts/user.context";
 
 const defaultFormFields = {
     email: '',
@@ -15,8 +14,6 @@ const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
 
-    // const { setCurrentUser } = useContext(UserContext);
-
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
     }
@@ -24,18 +21,16 @@ const SignInForm = () => {
     const signInWithGoogle = async () => {
         const { user } = await signInWithGooglePopup();
         await createUserDocumentFromAuthIfDoesNotExist(user);
-        // setCurrentUser(user);
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault(); // prevents default behavior of the form submit, instead of it we will handle it manually
 
         try {
-            const { user } = await signInAuthUserWithEmailAndPassword(email, password);
-            // setCurrentUser(user);
+            await signInAuthUserWithEmailAndPassword(email, password);
             resetFormFields();
         } catch (error) {
-            if (error.code == "auth/invalid-credential") {
+            if (error.code === "auth/invalid-credential") {
                 alert('incorrect email or password');
             } else {
                 console.log(error);
