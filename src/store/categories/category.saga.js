@@ -3,7 +3,7 @@ import { getCategoriesAndDocuments } from "../../utils/firebase/firebase.utils";
 import { fetchCategoriesSuccess, fetchCategoriesFailed } from "./category.action";
 import { CATEGORIES_ACTION_TYPES } from "./category.types";
 
-export function* fetchCategoriesAsyn() {
+export function* fetchCategoriesAsync() {
     try {
         const categoriesArray = yield call(getCategoriesAndDocuments); // here yield is instead of usual await and call() turns a function into effect. It receives a callable function and its parameter
         yield put(fetchCategoriesSuccess(categoriesArray)); // put is generator version of dispatch. does the same (dispatches the action)
@@ -13,7 +13,7 @@ export function* fetchCategoriesAsyn() {
 }
 
 export function* onFetchCategories() {
-    yield takeLatest(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START, fetchCategoriesAsyn); //returns only the latest function if the same one was called many times. It is like reducer: takes type of action and action that happens
+    yield takeLatest(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START, fetchCategoriesAsync); //returns only the latest function if the same one was called many times. It is like reducer: takes type of action and action that happens
 }
 
 export function* categoriesSaga() {

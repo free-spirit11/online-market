@@ -70,8 +70,8 @@ export const createUserDocumentFromAuthIfDoesNotExist = async (userAuth, additio
             console.log('error creating the user', error.message)
         }
     }
-    // if user exists in the db, or otherwise we will return userDocRef
-    return userDocRef;
+    // if user exists in the db, or otherwise we will return userDocRef (changed to userSnapshot for sagas)
+    return userSnapshot;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
@@ -89,5 +89,18 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
+
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+        const unsubscribe = onAuthStateChanged(
+            auth,
+            (userAuth) => { //this is a callback that gets a value of user being authed when it firstbinstantializes
+                unsubscribe(); //we unsubscribe it as soon as we get the value of the auth
+                resolve(userAuth); //use the value we got from callback to resolve the promise
+            },
+            reject // is a callback that will pass an error with the reject of promise
+        );
+    });
+};
 
 //NOTE: the reason why are we creating our own functions to utilize firebstore/firebase given functions, instead of using them directly where needed, is to isolate it all in one util file and in case anything changes on firestore - we can just change one function that we use everywhere else, instead of changing the way we utilize firestore functions in many places
