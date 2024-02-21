@@ -6,7 +6,7 @@ import Authentication from "./routes/authentication/authentication.component";
 import Shop from "./routes/shop/shop.component";
 import Checkout from "./routes/checkout/checkout.component";
 import { onAuthStateChangedListener, createUserDocumentFromAuthIfDoesNotExist, getCategoriesAndDocuments } from "./utils/firebase/firebase.utils";
-import { setCurrentUser } from "./store/user/user.action";
+import { setCurrentUser } from "./store/user/user.reducer";
 import { useDispatch } from "react-redux";
 
 const App = () => {
@@ -17,8 +17,9 @@ const App = () => {
       if (user) {
         createUserDocumentFromAuthIfDoesNotExist(user);
       }
-
-      dispatch(setCurrentUser(user)); //dispatch passes the action to every reducer function and depending on the type the corresponding reducer gets triggered
+      const pickedUser = user && (({ accessToken, email }) => ({ accessToken, email }))(user);
+      console.log(setCurrentUser(pickedUser));
+      dispatch(setCurrentUser(pickedUser)); //dispatch passes the action to every reducer function and depending on the type the corresponding reducer gets triggered
     });
     return unsubscribe;
   }, []);
@@ -36,3 +37,6 @@ const App = () => {
 };
 
 export default App;
+
+
+
