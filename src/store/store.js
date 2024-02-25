@@ -9,12 +9,6 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleWares)
 });
 
-
-
-
-
-
-
 // import { compose, createStore, applyMiddleware } from 'redux';
 
 // const middleWares = [logger];
