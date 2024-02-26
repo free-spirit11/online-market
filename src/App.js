@@ -18,7 +18,6 @@ const App = () => {
         createUserDocumentFromAuthIfDoesNotExist(user);
       }
       const pickedUser = user && (({ accessToken, email }) => ({ accessToken, email }))(user);
-      console.log(setCurrentUser(pickedUser));
       dispatch(setCurrentUser(pickedUser)); //dispatch passes the action to every reducer function and depending on the type the corresponding reducer gets triggered
     });
     return unsubscribe;
